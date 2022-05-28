@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Asset Upload</title>
+    <link href="/assets/uppy.min.css" rel="stylesheet">
+    <style>
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 90vh;
+        font-family: -apple-system,blinkmacsystemfont,Segoe UI,helvetica,arial,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol;
+      }
+      .wrapper {
+        max-width: 310px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h3>Upload files here:</h3>
+      <div id="drag-drop-area"></div>
+    </div>
+
+    <script src="/assets/uppy.min.js"></script>
+    <script>
+      var uppy = new Uppy.Core({
+          autoProceed: true,
+        })
+        .use(Uppy.Dashboard, {
+          inline: true,
+          target: '#drag-drop-area',
+          width: 310,
+          height: 210,
+        })
+        .use(Uppy.XHRUpload, {
+          endpoint: '/upload',
+        })
+        .use(Uppy.GoldenRetriever)
+
+      uppy.on('complete', (result) => {
+        console.log('Upload complete! We’ve uploaded these files:', result.successful)
+      })
+
+      uppy.on('error', (error) => {
+        console.log(error)
+      });
+    </script>
+  </body>
+</html>
